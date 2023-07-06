@@ -1,5 +1,6 @@
 package com.example.chi_phone_contacts.entities;
 
+import com.example.chi_phone_contacts.validation.ValidEmail;
 import com.example.chi_phone_contacts.validation.ValidPhoneNumber;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -23,6 +24,7 @@ public class Contact {
     @ElementCollection
     @ValidPhoneNumber
     private Set<String> phoneNumbers;
+    @ValidEmail
     @ElementCollection
     private Set<String> emails;
 

@@ -25,22 +25,22 @@ public class ContactController {
 
     @PostMapping
     public ResponseEntity<?> createContact(@RequestBody @Valid Contact contact, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            // Handle validation errors
-            List<String> errors = bindingResult.getAllErrors()
-                    .stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                    .collect(Collectors.toList());
-
-            return ResponseEntity.badRequest().body(errors);
-        }
-
-        Contact createdContact = contactService.createContact(contact);
-        return ResponseEntity.ok(createdContact);
+       try {
+           Contact createdContact = contactService.createContact(contact);
+           return ResponseEntity.ok(createdContact);
+       }catch (IllegalArgumentException e) {
+           return ResponseEntity.badRequest().body(null);
+           //TODO add message for exception
+       }
     }
 
     @GetMapping
     public List<Contact> all(){
         return contactService.getAllContacts();
+    }
+
+    @PutMapping("/{id}")
+    public Contact updateContact(@PathVariable Long id, @RequestBody Contact updatedContact) {
+        return contactService.updateContact(id, updatedContact);
     }
 }

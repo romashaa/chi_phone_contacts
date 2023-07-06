@@ -10,17 +10,12 @@ public class PhoneNumberValidator implements ConstraintValidator<ValidPhoneNumbe
 
     private static final Pattern NUMBER_PATTERN = Pattern.compile("[+]{1}380[0-9]{9}");
 
-
-//    @Override
-//    public void initialize(ValidPhoneNumber constraintAnnotation) {
-//        // Initialization logic, if needed
-//    }
-
     @Override
     public boolean isValid(Set<String> phoneNumbers, ConstraintValidatorContext context) {
         if (phoneNumbers.isEmpty()){
             return false;
         }
+
         for (String phoneNumber: phoneNumbers) {
             if(!NUMBER_PATTERN.matcher(phoneNumber).matches()){
                 return false;
