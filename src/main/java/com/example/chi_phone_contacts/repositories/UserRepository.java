@@ -1,4 +1,12 @@
 package com.example.chi_phone_contacts.repositories;
 
-public interface UserRepository {
+import com.example.chi_phone_contacts.entities.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByUsername(String email);
 }

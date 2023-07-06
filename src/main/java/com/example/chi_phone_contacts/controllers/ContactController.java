@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/contacts")
+@RequestMapping("/api/auth/contacts")
 public class ContactController {
     private final ContactService contactService;
 
