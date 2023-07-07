@@ -4,43 +4,43 @@ import com.example.chi_phone_contacts.entities.Contact;
 import com.example.chi_phone_contacts.services.ContactService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/auth/contacts")
+@RequestMapping("/contacts")
 public class ContactController {
     private final ContactService contactService;
 
-//    @PostMapping
-//    public Contact createContact(@RequestBody @Valid Contact contact) {
-//        return contactService.createContact(contact);
-//    }
 
+    //3.     Add new contact
     @PostMapping
-    public ResponseEntity<?> createContact(@RequestBody @Valid Contact contact, BindingResult bindingResult) {
-       try {
-           Contact createdContact = contactService.createContact(contact);
-           return ResponseEntity.ok(createdContact);
-       }catch (IllegalArgumentException e) {
-           return ResponseEntity.badRequest().body(null);
-           //TODO add message for exception
-       }
+    public ResponseEntity<?> createContact(@RequestBody @Valid Contact contact, @RequestParam Long userId) {
+        Contact createdContact = contactService.createContact(contact, userId);
+        return ResponseEntity.ok(createdContact);
     }
 
-    @GetMapping
-    public List<Contact> all(){
-        return contactService.getAllContacts();
-    }
-
+    //4.     Edit existing contact
     @PutMapping("/{id}")
     public Contact updateContact(@PathVariable Long id, @RequestBody Contact updatedContact) {
         return contactService.updateContact(id, updatedContact);
     }
+
+    //5.     Delete existing contact
+    @DeleteMapping("/{id}")
+    public void deleteContact(@PathVariable Long id){
+        contactService.deleteContact(id);
+    }
+
+    //6.     Get list of existing user's contacts
+    @GetMapping
+    public List<Contact> getUserContacts(@RequestParam Long userId){
+        return contactService.getAllContactsOfUser(userId);
+    }
+
+
+
 }
