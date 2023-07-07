@@ -5,6 +5,8 @@ import com.example.chi_phone_contacts.entities.User;
 import com.example.chi_phone_contacts.repositories.ContactRepository;
 import com.example.chi_phone_contacts.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -59,8 +61,3 @@ public class ContactService {
     }
 }
 
-class DuplicateContactException extends RuntimeException {
-    public DuplicateContactException(String message) {
-        super(message);
-    }
-}
